@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include "memory/vaddr.h"
 
 static int is_batch_mode = false;
 
@@ -78,6 +79,17 @@ static int cmd_info(char *args){
   return 0;
 }
 
+static int cmd_x(char *args){
+  char *arg = strtok(NULL, " ");
+  int num = atoi(arg);
+  arg = strtok(NULL, " ");
+  int addr = strtol(arg, NULL, 16);
+  for(int i = 0; i < num; i++){
+    printf("%08lx\n", vaddr_read(addr + i * 4, 4));
+  }
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -91,6 +103,7 @@ static struct {
 
   {"si" , "Step one instruction" , cmd_si },
   {"info" , "info reg state " , cmd_info},
+  {"x" , "scan memory "  , cmd_x}
 
 
 };
