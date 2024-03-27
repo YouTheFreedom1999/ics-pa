@@ -127,6 +127,18 @@ static bool make_token(char *e) {
   return true;
 }
 
+void dump_tokens(int p , int q , char * out){
+  for(int i = p;i<=q;i++){
+    if(tokens[i].type == TK_INT) {
+      sprintf(out,"%s" , tokens[i].str);
+      out += strlen(tokens[i].str);
+    }else
+      sprintf(out++,"%c" , tokens[i].type);
+  }
+
+  // sprintf(out++,"\n");
+}
+
 
 int check_parentheses(int p , int q) {
   if(q-p<2)
@@ -151,20 +163,27 @@ int find_main_op(int p , int q , char *op_type){
   int matching = 0;
   *op_type = 'u';
   int index = p;
+
   for(int i = p;i<q+1;i++){
     if(tokens[i].type == '(' )
       matching++;
     
     if(tokens[i].type == ')')
       matching--;
+
     
     if(matching==0 && i != q){
-      if(tokens[i].type == '+' || tokens[i].type == '-' || *op_type == 'u'){
+      bool newIsMul = tokens[i].type == '*' || tokens[i].type == '/';
+      bool newIsAdd = tokens[i].type == '+' || tokens[i].type == '-' ;
+      bool oldIsAdd = *op_type == '+' || *op_type == '-' ;
+
+      if(newIsAdd || (newIsMul && !oldIsAdd)){
         *op_type = tokens[i].type;
-        index = i;
+      index = i;
       }
     }
   }
+
   if(*op_type == 'u'){
     assert(0);
   }else{
@@ -173,6 +192,9 @@ int find_main_op(int p , int q , char *op_type){
 }
 
 uint32_t eval(int p , int q) {
+  char buf [100];
+  dump_tokens(p,q,buf);
+  printf("%s\n",buf );
   if(p>q){
     assert(0);
   }else if(p == q){
@@ -205,13 +227,6 @@ word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  }
-
-  for(int i = 0;i<nr_token;i++){
-    if(tokens[i].type == TK_INT) 
-      Log("%d" , atoi(tokens[i].str));
-    else
-      Log("%c" , tokens[i].type);
   }
 
   int result =  eval(0 , nr_token-1);
