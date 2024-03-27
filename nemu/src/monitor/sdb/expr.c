@@ -208,9 +208,9 @@ word_t expr(char *e, bool *success) {
 
   for(int i = 0;i<nr_token;i++){
     if(tokens[i].type == TK_INT) 
-      printf("%d" , atoi(tokens[i].str));
+      Log("%d" , atoi(tokens[i].str));
     else
-      printf("%c" , tokens[i].type);
+      Log("%c" , tokens[i].type);
   }
 
   int result =  eval(0 , nr_token-1);
