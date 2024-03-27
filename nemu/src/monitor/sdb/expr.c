@@ -103,15 +103,16 @@ static bool make_token(char *e) {
          */
 
         if(rules[i].token_type == TK_NOTYPE)
-          continue;
+          break;
 
         assert(nr_token<32);
-        tokens[nr_token++].type  = rules[i].token_type;
+        tokens[nr_token].type  = rules[i].token_type;
         
         if(rules[i].token_type == TK_INT) {
             assert(substr_len<32);
-            memcpy(tokens[nr_token++].str , substr_start , substr_len);
+            memcpy(tokens[nr_token].str , substr_start , substr_len);
         }
+        nr_token++;
 
         break;
       }
