@@ -56,7 +56,11 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args){
   char *arg = strtok(NULL, " ");
-  int num = atoi(arg);
+  int num;
+  if(arg == NULL) 
+    num = 1;
+  else
+    num = atoi(arg);
   cpu_exec(num);
   return 0;
 }
