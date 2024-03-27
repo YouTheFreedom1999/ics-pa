@@ -20,4 +20,8 @@ submit:
 	git gc
 	STUID=$(STUID) STUNAME=$(STUNAME) bash -c "$$(curl -s http://why.ink:8080/static/submit.sh)"
 
+
+NEMU:
+	make -C /home/sjh/pa/ics-pa/nemu app
+
 .PHONY: default submit

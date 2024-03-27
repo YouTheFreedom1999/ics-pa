@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
   bool su ;
 
-  expr("1+2" , &su);
+  expr("(  1+2*(3/4)-5)" , &su);
 
   return is_exit_status_bad();
 }

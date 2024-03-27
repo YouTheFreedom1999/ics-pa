@@ -38,9 +38,14 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
+  {"-", '-'},         // plus
+  {"\\*", '*'},         // plus
+  {"/", '/'},         // plus
   {"==", TK_EQ},        // equal
 
-  {"\\d+", TK_INT},
+  {"[0-9]+", TK_INT},
+  {"\\(" , '('},
+  {"\\)" , ')'}
 
 };
 
@@ -96,12 +101,14 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
-        switch (rules[i].token_type) {
-          default: TODO();
+        assert(nr_token<32);
+        tokens[nr_token++].type  = rules[i].token_type;
+        
+        if(rules[i].token_type == TK_INT) {
+            assert(substr_len<32);
+            memcpy(tokens[nr_token++].str , substr_start , substr_len);
         }
 
-        break;
       }
     }
 
