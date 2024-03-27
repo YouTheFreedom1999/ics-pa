@@ -109,6 +109,7 @@ static bool make_token(char *e) {
             memcpy(tokens[nr_token++].str , substr_start , substr_len);
         }
 
+        break;
       }
     }
 
@@ -129,7 +130,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  // TODO();
 
   return 0;
 }
