@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 
   bool su ;
 
-  // expr("(1+2*(16/4)-5)" , &su);
-  expr("3*3*3*3*3*3*3*3" , &su);
+  expr("(1+2*(16/4)-5)" , &su);
+  // expr("3*3*3*3*3*3*3*3" , &su);
 
   return is_exit_status_bad();
 }

@@ -193,6 +193,7 @@ int find_main_op(int p , int q , char *op_type){
 
 uint32_t eval(int p , int q) {
   char buf [100];
+  char op_type ;
   dump_tokens(p,q,buf);
   printf("%s\n",buf );
   if(p>q){
@@ -200,9 +201,9 @@ uint32_t eval(int p , int q) {
   }else if(p == q){
     return atoi(tokens[p].str);
   }else if(check_parentheses(p,q) == 0){
-    eval(p+1,q-1);
+    return eval(p+1,q-1);
   }else{
-    char op_type ;
+    
     int op = find_main_op(p,q , &op_type);
     uint32_t val1 = eval(p,op-1);
     uint32_t val2 = eval(op+1,q);
@@ -230,7 +231,7 @@ word_t expr(char *e, bool *success) {
   }
 
   int result =  eval(0 , nr_token-1);
-  printf("%s result is %d\n" , e , result);
+  printf("%s = %d\n" , e , result);
 
   return result;
 
